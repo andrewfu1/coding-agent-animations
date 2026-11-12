@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WoW Forever Cities</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#000;overflow:hidden}
+iframe{border:0;width:100%;height:100%;display:block}
+nav{position:fixed;left:16px;right:16px;bottom:16px;margin:0 auto;width:fit-content;flex-wrap:wrap;justify-content:center;display:flex;gap:2px;padding:5px;border-radius:10px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px)}
+nav a,nav button{all:unset;cursor:pointer;padding:10px 12px;border-radius:7px;font:700 15px/1 "Cinzel",serif;color:var(--c,#aaa)}
+nav button:hover,nav a:hover{background:rgba(255,255,255,.08)}
+nav button[aria-current="true"]{background:rgba(255,255,255,.12);box-shadow:inset 0 -2px 0 var(--c)}
+</style>
+</head>
+<body>
+<iframe id="view" title="City"></iframe>
+<nav id="nav"><a href="../index.html" title="Back">←</a></nav>
+<script>
+/* Add a city: drop <city>.html next to this file and add it here. Alliance first (blue), then Horde (red). */
+const CITIES=[
+  {id:'stormwind',name:'Stormwind',color:'#6aa8ff',file:'stormwind.html'},
+  {id:'ironforge',name:'Ironforge',color:'#6aa8ff',file:'ironforge.html'},
+  {id:'darnassus',name:'Darnassus',color:'#6aa8ff',file:'darnassus.html'},
+  {id:'orgrimmar',name:'Orgrimmar',color:'#ff6a55',file:'orgrimmar.html'},
+  {id:'thunderbluff',name:'Thunder Bluff',color:'#ff6a55',file:'thunderbluff.html'},
+  {id:'undercity',name:'Undercity',color:'#ff6a55',file:'undercity.html'},
+];
+const nav=document.getElementById('nav'),view=document.getElementById('view');
+for(const c of CITIES){const b=document.createElement('button');b.style.setProperty('--c',c.color);b.dataset.id=c.id;
+  b.textContent=c.name;b.onclick=()=>{location.hash=c.id;};nav.appendChild(b);}
+function show(){const c=CITIES.find(c=>c.id===location.hash.slice(1))||CITIES[0];
+  for(const b of nav.querySelectorAll('button'))b.setAttribute('aria-current',b.dataset.id===c.id);
+  if(!view.src.endsWith(c.file))view.src=c.file;}
+addEventListener('hashchange',show);show();
+</script>
+</body>
+</html>
